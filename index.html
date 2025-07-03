@@ -117,7 +117,97 @@ if (!document.getElementById('memory-btn')) {
   });
 }
 
+// Add slidephotos
+  
+const photos = [
+  'photos/photo1.jpg',
+  'photos/photo2.jpg',
+  'photos/photo3.jpg',
+  'photos/photo4.jpg'
+];
 
+let currentPhotoIndex = 0;
+
+function createSlideshow() {
+  if (document.getElementById('photo-slideshow')) return;
+
+  // Container
+  const container = document.createElement('div');
+  container.id = 'photo-slideshow';
+  container.style.position = 'fixed';
+  container.style.bottom = '20px';
+  container.style.left = '20px';
+  container.style.width = '200px';
+  container.style.height = '150px';
+  container.style.backgroundColor = 'rgba(0,0,0,0.5)';
+  container.style.borderRadius = '10px';
+  container.style.overflow = 'hidden';
+  container.style.display = 'flex';
+  container.style.alignItems = 'center';
+  container.style.justifyContent = 'center';
+  container.style.zIndex = '9999';
+  container.style.userSelect = 'none';
+
+  // Image element
+  const img = document.createElement('img');
+  img.src = photos[currentPhotoIndex];
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.objectFit = 'cover';
+  img.style.transition = 'opacity 0.5s ease';
+  container.appendChild(img);
+
+  // Left arrow
+  const leftBtn = document.createElement('button');
+  leftBtn.textContent = '◀';
+  leftBtn.style.position = 'absolute';
+  leftBtn.style.left = '5px';
+  leftBtn.style.background = 'transparent';
+  leftBtn.style.border = 'none';
+  leftBtn.style.color = 'white';
+  leftBtn.style.fontSize = '20px';
+  leftBtn.style.cursor = 'pointer';
+  leftBtn.style.zIndex = '10000';
+  container.appendChild(leftBtn);
+
+  // Right arrow
+  const rightBtn = document.createElement('button');
+  rightBtn.textContent = '▶';
+  rightBtn.style.position = 'absolute';
+  rightBtn.style.right = '5px';
+  rightBtn.style.background = 'transparent';
+  rightBtn.style.border = 'none';
+  rightBtn.style.color = 'white';
+  rightBtn.style.fontSize = '20px';
+  rightBtn.style.cursor = 'pointer';
+  rightBtn.style.zIndex = '10000';
+  container.appendChild(rightBtn);
+
+  document.body.appendChild(container);
+
+  function showPhoto(index) {
+    img.style.opacity = 0;
+    setTimeout(() => {
+      img.src = photos[index];
+      img.style.opacity = 1;
+    }, 300);
+  }
+
+  leftBtn.onclick = () => {
+    currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+    showPhoto(currentPhotoIndex);
+  };
+
+  rightBtn.onclick = () => {
+    currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+    showPhoto(currentPhotoIndex);
+  };
+}
+
+// Run on page load
+window.onload = function() {
+  createSlideshow();
+};
 
 // Music button setup (runs after story is ready)
 (function() {
