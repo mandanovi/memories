@@ -10,7 +10,8 @@
 <body>
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Untitled Story.</tw-noscript></noscript></tw-story>
 <tw-storydata name="Untitled Story" startnode="1" creator="Twine" creator-version="2.10.0" format="Harlowe" format-version="3.3.9" ifid="44031709-7DD4-4A2B-99A1-3157F7193714" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">// Greeting message on page load
-// Greeting message on page load
+
+// Greeting message on page load (Twine + GitHub-friendly)
 window.onload = function() {
   setTimeout(function() {
     const now = new Date();
@@ -29,7 +30,13 @@ window.onload = function() {
     else if (hours < 6 && ampm === 'PM') greeting = "Good afternoon, mom Bonnie!";
     else greeting = "Good evening, mom Bonnie!";
 
-    const greetingText = `${greeting} It’s currently ${hours}:${minutes} ${ampm}.`;
+    // Check birthday (5th July)
+    let birthdayMessage = '';
+    if (now.getDate() === 5 && (now.getMonth() + 1) === 7) {
+      birthdayMessage = " 🎂 Happy Birthday, Mom Bonnie!";
+    }
+
+    const greetingText = `${greeting} It’s currently ${hours}:${minutes} ${ampm}.${birthdayMessage}`;
 
     let passage = document.querySelector('.passage') || document.querySelector('tw-passage');
     if (passage) {
@@ -38,7 +45,7 @@ window.onload = function() {
       p.style.fontSize = '14px';
       passage.prepend(p);
     }
-  }, 100);  // 100 milliseconds delay
+  }, 100);  // slight delay for Twine to load passage
 };
 
 
