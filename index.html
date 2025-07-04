@@ -219,11 +219,44 @@ function createSlideshow() {
   };
 }
 
+  
 // Run on page load
 window.onload = function() {
   createSlideshow();
 };
 
+// Inject slideshow CSS styles dynamically
+(function() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .slideshow-container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      overflow: hidden;
+      position: relative;
+    }
+    .slideshow-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .slideshow-container .slide {
+      display: none;
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+    }
+    .slideshow-container .slide.active {
+      display: block;
+      position: relative;
+    }
+  `;
+  document.head.appendChild(style);
+})();
+
+
+  
 // Music button setup (runs after story is ready)
 (function() {
   if (document.getElementById('music-toggle')) return;
