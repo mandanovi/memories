@@ -31,35 +31,25 @@ window.onload = function() {
     else if (hours < 6 && ampm === 'PM') greeting = "Good afternoon, mom Bonnie!";
     else greeting = "Good evening, mom Bonnie!";
 
+    // Birthday check
     let birthdayMessage = '';
-    if (now.getDate() === 5 && now.getMonth() === 6) {
+    if (now.getDate() === 5 && now.getMonth() === 6) { // July is month 6 (0-based)
       birthdayMessage = " 🎂 Happy Birthday, Mom Bonnie!";
     }
 
     const greetingText = `${greeting} It’s currently ${hours}:${minutes} ${ampm}.${birthdayMessage}`;
 
-    // Try to find passage or tw-passage container
-    let passage = document.querySelector('.passage') || document.querySelector('tw-passage');
+    // Find a container on the page — fallback to body if nothing else
+    let container = document.querySelector('.passage') || document.querySelector('tw-passage') || document.body;
 
-    if (passage) {
-      let p = document.createElement('p');
-      p.textContent = greetingText;
-      p.style.fontSize = '14px';
-      passage.prepend(p);
-    } else {
-      // If passage not found, add greeting at top of body as fallback
-      let p = document.createElement('p');
-      p.textContent = greetingText;
-      p.style.fontSize = '14px';
-      p.style.padding = '10px';
-      p.style.backgroundColor = '#ffe6f0';
-      p.style.position = 'fixed';
-      p.style.top = '0';
-      p.style.width = '100%';
-      p.style.zIndex = '9999';
-      p.style.textAlign = 'center';
-      document.body.prepend(p);
-    }
+    let p = document.createElement('p');
+    p.textContent = greetingText;
+    p.style.fontSize = '14px';
+    p.style.fontWeight = 'bold';
+    p.style.margin = '10px';
+    p.style.color = '#b5537e';
+
+    container.prepend(p);
   }, 100);
 };
 
