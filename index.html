@@ -11,9 +11,9 @@
 <tw-story><noscript><tw-noscript>JavaScript needs to be enabled to play Untitled Story.</tw-noscript></noscript></tw-story>
 <tw-storydata name="Untitled Story" startnode="1" creator="Twine" creator-version="2.10.0" format="Harlowe" format-version="3.3.9" ifid="44031709-7DD4-4A2B-99A1-3157F7193714" options="" tags="" zoom="1" hidden><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css"></style><script role="script" id="twine-user-script" type="text/twine-javascript">// Greeting message on page load
 
-// Greeting message on page load (Twine + GitHub-friendly)
+// Greeting message on page load
 window.onload = function() {
-  setTimeout(function() {
+  setTimeout(() => {
     const now = new Date();
     let hours = now.getHours();
     let minutes = now.getMinutes();
@@ -30,23 +30,28 @@ window.onload = function() {
     else if (hours < 6 && ampm === 'PM') greeting = "Good afternoon, mom Bonnie!";
     else greeting = "Good evening, mom Bonnie!";
 
-    // Check birthday (5th July)
+    // Birthday check
     let birthdayMessage = '';
-    if (now.getDate() === 5 && (now.getMonth() + 1) === 7) {
+    if (now.getDate() === 5 && now.getMonth() === 6) { // July is month 6 (0-based)
       birthdayMessage = " 🎂 Happy Birthday, Mom Bonnie!";
     }
 
     const greetingText = `${greeting} It’s currently ${hours}:${minutes} ${ampm}.${birthdayMessage}`;
 
-    let passage = document.querySelector('.passage') || document.querySelector('tw-passage');
-    if (passage) {
-      let p = document.createElement('p');
-      p.textContent = greetingText;
-      p.style.fontSize = '14px';
-      passage.prepend(p);
-    }
-  }, 100);  // slight delay for Twine to load passage
+    // Find a container on the page — fallback to body if nothing else
+    let container = document.querySelector('.passage') || document.querySelector('tw-passage') || document.body;
+
+    let p = document.createElement('p');
+    p.textContent = greetingText;
+    p.style.fontSize = '14px';
+    p.style.fontWeight = 'bold';
+    p.style.margin = '10px';
+    p.style.color = '#b5537e';
+
+    container.prepend(p);
+  }, 100);
 };
+
 
 
 // Simple floating hearts/snowflakes animation
